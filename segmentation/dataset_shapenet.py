@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 import time 
+import pdb
 
 # Object number in dataset:
 # catgory    | train | valid | test 
@@ -48,7 +49,7 @@ PART_NUM = {
     "Table": 3,
 }
 
-TOTAL_PARTS_NUM = sum(PART_NUM.values())
+TOTAL_PARTS_NUM = sum(PART_NUM.values()) # here it is 50 as above
 
 # For calculating mIoU
 def get_valid_labels(category: str):
@@ -121,7 +122,7 @@ class ShapeNetPart(Dataset):
 
         mask = self.get_mask(category)
         onehot = self.get_catgory_onehot(category)
-        
+        # pdb.set_trace()
         return category, obj_id, points, labels, mask, onehot
 
 def test_model(model, dataset, cuda= "0", bs= 1, point_num= 1024):

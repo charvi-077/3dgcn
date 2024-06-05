@@ -139,11 +139,12 @@ class Manager():
 
         with torch.no_grad():
             for i, (cat_name, obj_ids, points, labels, mask, onehot) in enumerate(test_data):
-                points = points.to(self.device)
-                labels = labels.to(self.device)
-                onehot = onehot.to(self.device)
-                out = self.model(points, onehot)
+                points = points.to(self.device) # torch.Size([4, 1024, 3])
+                labels = labels.to(self.device) # torch.Size([4, 1024])
+                onehot = onehot.to(self.device) # torch.Size([4, 16])
+                out = self.model(points, onehot) # torch.Size([4, 1024, 50])
                 loss = self.loss_function(out.reshape(-1, out.size(-1)), labels.view(-1,))
+                # breakpoint()
                 test_loss += loss.item()
 
                 mask = mask.to(self.device)
